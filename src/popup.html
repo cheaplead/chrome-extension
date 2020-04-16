@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cheaplead</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/popup.css">
+    <!-- LOGOS -->
+    <link rel="apple-touch-icon" href="./img/logo.png">
+    <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
+</head>
+
+<body>
+    <div class="menubar">
+        <span class="license">
+            <a href="https://cheaplead.netlify.com" target="_blank" title="You're licensed">
+                <b>
+                    <div style="display: none;">
+                        <b style="float: left; color: #ffffff">User: &nbsp; </b>
+                        <small>user.email.address</small>
+                    </div>
+
+                    <small>Add your license</small>
+                </b>
+            </a>
+        </span>
+        <span class="version">
+            <small>
+                <b>
+                    Version: <span id="version_number">0.1.6</span>
+                </b>
+            </small>
+        </span>
+    </div>
+    <div class="totalBody">
+        <center>
+            <div class="header">
+                <!-- <br> -->
+                <div class="logo"><img src="./img/logo.png" width="100" alt="cheaplead logo"></div>
+                <!-- <br> -->
+                <div class="greetings mb-3">
+                    <h3>Cheaplead</h3>
+                </div>
+            </div>
+            <div class="actionCon">
+                <form name="filterForm">
+                    <div class="inputCon">
+                        <div class="form-group group">
+                            <input type="text" name="filterSearch" id="filterSearch" autofocus required
+                                placeholder="Place just a [domain] or [url]" class="form-control">
+                        </div>
+                        <small id="errorBox" class="text-danger"></small>
+                    </div>
+
+                    <div class="buttonCon">
+                        <div class="buttons">
+                            <button type="button" id="clear" class="clearBtn isNotButton">
+                                <span> Clear </span>
+                            </button>
+
+                            <button type="submit" id="startPulling" class="startPullingBtn isButton">
+                                <span> Start pulling </span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </center>
+        <div class="resultCon">
+            <h6>
+                <small>
+                    <b>
+                        Result:
+                        <b class="totalValsCon">
+                            [<span id="totalDomains"></span> domains]
+                            -->
+                            [<span id="totalEmails"></span> emails]
+                        </b>
+                    </b>
+                    <button id="copyResultBtn" class="copyResultBtn" style="color: #fcb917ff;">
+                        <span> Copy </span>
+                    </button>
+                </small>
+            </h6>
+            <div class="resultMain">
+                <div class="result" id="domains" hidden></div>
+                <div class="result" id="emails"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/jquery-3.4.1.min.js"></script>
+    <script src="./js/popup.js"></script>
+</body>
+
+</html>

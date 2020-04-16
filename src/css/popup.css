@@ -1,0 +1,217 @@
+/* BreeSerif */
+@font-face {
+  font-family: "BreeSerif";
+  src: url("../fonts/BreeSerif/BreeSerif-Regular.otf");
+}
+/* End of BreeSerif */
+
+* {
+  outline: 0px !important;
+  /* transition: all 0.25s; */
+}
+
+body {
+  font-family: "BreeSerif", sans-serif;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  min-height: 300px;
+  width: 300px;
+  /* border: 1px solid red; */
+  color: #28334aff !important;
+  /* background-color: #f6f6f6; */
+  background-color: #ffffff;
+}
+
+.totalBody {
+  padding: 15px;
+}
+
+/* MENUBAR */
+
+.menubar {
+  float: left;
+  margin: 10px 0px;
+  margin-bottom: 30px;
+  width: 100%;
+  text-align: right;
+}
+
+.menubar .license {
+  float: left;
+}
+
+.menubar .license a {
+  display: block;
+  text-decoration: none;
+  background-color: #28334aff;
+  color: #fcb917ff;
+  padding: 1px 20px 3px 12.5px;
+  border-radius: 0px 50px 50px 0px;
+  transition: all 0.25s;
+}
+
+.menubar .version {
+  float: right;
+}
+
+.menubar .version small {
+  display: block;
+  padding: 4.5px;
+  padding-right: 15px;
+  border: 1px solid transparent;
+}
+
+/* END OF MENUBAR */
+
+/* END OF HEADER */
+
+.header {
+  display: block;
+  width: 100%;
+  text-align: center;
+  /* border: 1px solid red; */
+}
+
+/* END OF HEADER */
+
+/* END OF ACTIONCON */
+
+.actionCon {
+  /* border: 1px solid red; */
+  padding: 0px;
+}
+
+.actionCon .inputCon div.group {
+  padding: 10px 0px;
+  margin-bottom: 0px !important;
+}
+
+.actionCon .inputCon input#filterSearch {
+  border: 1.5px solid #fcb917ff;
+  text-align: center;
+  font-size: 13px;
+  border-radius: 50px;
+  color: #28334aff;
+}
+
+.actionCon .inputCon input#filterSearch:focus {
+  box-shadow: 0px 2.5px 5px #ececec;
+}
+
+.actionCon .inputCon small#errorBox {
+  display: block;
+  margin-bottom: 2.5px;
+  text-align: center;
+}
+
+.actionCon .buttonCon {
+  margin-bottom: 10px;
+  /* border: 1px solid red; */
+}
+
+.actionCon .buttonCon button:disabled {
+  opacity: 0.9;
+}
+.actionCon .buttonCon button:active {
+  transform: scale(0.9);
+}
+
+.actionCon .buttonCon button.isNotButton {
+  display: inline-block;
+  border-radius: 50px;
+  background-color: transparent;
+  color: #28334aff;
+  /* outline: 0px !important; */
+  border: none;
+  text-align: center;
+  font-size: 14px;
+  padding: 5px 10px;
+  transition: all 0.25s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.actionCon .buttonCon button.isButton {
+  display: inline-block;
+  border-radius: 50px;
+  background-color: #28334aff;
+  border: none;
+  color: #fcb917ff;
+  text-align: center;
+  font-size: 14px;
+  padding: 5px 15px;
+  transition: all 0.25s;
+  cursor: pointer;
+  margin: 5px;
+  /* outline: 0px !important; */
+}
+
+.actionCon .buttonCon button.isButton span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: all 0.25s;
+}
+
+.actionCon .buttonCon button.isButton span:after {
+  content: "»";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: 5px;
+  transition: all 0.25s;
+}
+
+.actionCon .buttonCon button.isButton:hover span {
+  padding-right: 15px;
+}
+
+.actionCon .buttonCon button.isButton:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+/* END OF ACTIONCON */
+
+/* RESULTCON */
+
+.totalValsCon {
+  display: none;
+}
+
+.resultCon #copyResultBtn {
+  display: none;
+  float: right;
+}
+
+.resultCon .resultMain {
+  border: 1.5px solid #fcb917ff;
+  border-radius: 15px;
+  padding: 15px;
+  height: 200px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  /* background-image: url("../img/loader.gif"); */
+  background-blend-mode: screen;
+  background-position: center;
+  background-size: 8%;
+  background-repeat: no-repeat;
+}
+
+.resultCon .resultMain:hover {
+  border-color: #fcb917ff;
+  box-shadow: 0px 0px 5px #ececec inset;
+}
+
+.resultCon .resultMain span#dms,
+.resultCon .resultMain span#dms {
+  display: block;
+  font-size: 13px;
+}
+
+.resultCon .resultMain .result {
+  min-height: 100px;
+}
+
+/* END OF RESULTCON */

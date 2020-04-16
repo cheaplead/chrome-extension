@@ -1,0 +1,63 @@
+{
+  "manifest_version": 2,
+  "name": "Cheaplead",
+  "version": "0.1.66",
+  "description": "A tool that pulls bulk email addresses in a jiffy, on a click.",
+  "homepage_url": "https://cheaplead.net",
+  "author": "https://cheaplead.net",
+  "icons": {
+    "16": "./icons/icon16.png",
+    "48": "./icons/icon48.png",
+    "128": "./icons/icon128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "./icons/icon16.png",
+      "19": "./icons/icon19.png",
+      "38": "./icons/icon38.png",
+      "48": "./icons/icon48.png",
+      "128": "./icons/icon128.png"
+    },
+    "default_popup": "./src/popup.html",
+    "default_title": "Cheaplead"
+  },
+  "background": {
+    "persistent": true,
+    "scripts": ["./libs/background/bg.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./libs/content/jquery-3.4.1.min.js"]
+    },
+    {
+      "matches": ["*://*.alibaba.com/*from=cheaplead"],
+      "js": ["./libs/content/ali.js"]
+    },
+    {
+      "matches": ["*://*.alibaba.com/contactinfo.html*from=cheaplead"],
+      "js": ["./libs/content/aliFrame.js"],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*.google.com/*from=cheaplead",
+        "*://*.yahoo.com/*from=cheaplead",
+        "*://*.bing.com/*from=cheaplead",
+        "*://*.yandex.com/*from=cheaplead",
+        "*://*.duckduckgo.com/*from=cheaplead"
+      ],
+      "js": ["./libs/engine/search.js"]
+    }
+  ],
+  "web_accessible_resources": ["icons/icon.png"],
+  "permissions": [
+    "background",
+    "storage",
+    "activeTab",
+    "tabs",
+    "webNavigation",
+    "cookies",
+    "<all_urls>"
+  ]
+}
