@@ -16,7 +16,14 @@ class Background {
     if (dms != null) {
       if (dms.length > 0) {
         dms.forEach((dm) => {
-          !this.window.domains.includes(dm) ? this.window.domains.push(dm) : "";
+          !this.window.domains.includes(dm)
+            ? (() => {
+                this.window.domains.push(dm);
+                chrome.browserAction.setBadgeText({
+                  text: this.window.domains.length.toString(),
+                });
+              })()
+            : "";
         });
       }
     }
