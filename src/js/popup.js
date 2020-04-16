@@ -92,6 +92,10 @@ class PopUp {
       this.totalEms.text("");
 
       $(".totalValsCon").hide();
+
+      chrome.browserAction.setBadgeText({
+        text: "",
+      });
     });
   }
 
@@ -129,7 +133,7 @@ class PopUp {
         $(".totalValsCon").show();
         this.copyResBtn.show();
         this.totalDms.text(`${this.bgDms.length} `);
-        this.resultDomains.hide();
+        // this.resultDomains.hide();
       } else {
         $(".resultCon .resultMain")
           .removeClass("inResultBox")

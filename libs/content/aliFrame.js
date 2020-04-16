@@ -77,24 +77,36 @@ class AliFrame {
           ? !mtch.includes("www.")
             ? this.extnlDms.push(mtch)
             : (() => {
-                mtch
-                  .split("www.")[1]
-                  .match(rgEx)
-                  .forEach((mval) =>
-                    mval != null
-                      ? (() => {
-                          this.extnlDms.push(mval);
-                          setTimeout(() => {
-                            window.stop();
-                            console.log(
-                              `IframeID: ${
-                                window.origin.split("://")[1].split(".")[0]
-                              } all done!`
-                            );
-                          }, 2500);
-                        })()
-                      : ""
-                  );
+                mtch.split("www.")[1].includes("http")
+                  ? mtch
+                      .split("www.")[1]
+                      .split("http")[0]
+                      .match(rgEx)
+                      .forEach((mval) =>
+                        mval != null
+                          ? (() => {
+                              this.extnlDms.push(mval);
+                              setTimeout(() => {
+                                window.stop();
+                                this.startSearches();
+                              }, 2500);
+                            })()
+                          : ""
+                      )
+                  : mtch
+                      .split("www.")[1]
+                      .match(rgEx)
+                      .forEach((mval) =>
+                        mval != null
+                          ? (() => {
+                              this.extnlDms.push(mval);
+                              setTimeout(() => {
+                                window.stop();
+                                this.startSearches();
+                              }, 2500);
+                            })()
+                          : ""
+                      );
               })()
           : ""
       );
@@ -105,6 +117,8 @@ class AliFrame {
       data: { dms: this.extnlDms },
     });
   }
+
+  startSearches() {}
 
   // Main method, the execute method.
   exec() {
