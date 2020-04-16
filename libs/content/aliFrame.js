@@ -64,12 +64,12 @@ class AliFrame {
       // If there is no result from mtchs? stop loading and close window.
       if (mtchs.length <= 0) {
         window.stop();
-        setTimeout(() => {
-          chrome.runtime.sendMessage({
-            type: "closeThisIframe",
-            data: { url: window.origin },
-          });
-        }, 5000);
+        chrome.runtime.sendMessage({
+          type: "closeThisIframe",
+          data: {
+            id: window.origin.split("://")[1].split(".")[0],
+          },
+        });
       }
 
       mtchs.forEach((mtch) =>
@@ -81,7 +81,19 @@ class AliFrame {
                   .split("www.")[1]
                   .match(rgEx)
                   .forEach((mval) =>
-                    mval != null ? this.extnlDms.push(mval) : ""
+                    mval != null
+                      ? (() => {
+                          this.extnlDms.push(mval);
+                          setTimeout(() => {
+                            window.stop();
+                            console.log(
+                              `IframeID: ${
+                                window.origin.split("://")[1].split(".")[0]
+                              } all done!`
+                            );
+                          }, 2500);
+                        })()
+                      : ""
                   );
               })()
           : ""

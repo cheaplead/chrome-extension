@@ -44,7 +44,7 @@ class Ali {
 
     const openIFramesForLinks = (url = "") => {
       // Get the first word before "://" and the first dot "."
-      var ifrmId = url.split("://")[1].split(".")[0].replace("-", "");
+      var ifrmId = url.split("://")[1].split(".")[0];
 
       // Create iframe and set it's attributes
       var ifrm = document.createElement("iframe");
@@ -126,23 +126,21 @@ class Ali {
   testConnectionToFrames() {
     // TEST
     var isTop = true;
-    chrome.runtime.onMessage.addListener(function (res) {
-      console.log(`Testing connection: ${res.connection}`);
+    chrome.runtime.onMessage.addListener(function (req) {
+      if (req.type == testingConnections) {
+        console.log(`Testing connection: ${req.data.connection}`);
+      }
     });
     // TEST
   }
 
-  // Delete all Frames without domains
-  deleteAllBarrenFrames() {
-    chrome.runtime.onMessage.addListener(function (res) {
-      var ifrms = document.getElementsByTagName("iframe");
-      for (let i = 0; i < ifrms.length; i++) {
-        const ifrm = ifrms[i];
-        ifrm.src.includes(res.url)
-          ? document
-              .getElementById(ifrm.id)
-              .parentNode.removeChild(document.getElementById(ifrm.id))
-          : "";
+  // Delete all Frames without domains and frames after extraction of domains
+  deleteFrames() {
+    chrome.runtime.onMessage.addListener(function (req) {
+      if (req.type == "deleteFrames") {
+        document
+          .getElementById(req.data.id)
+          .parentNode.removeChild(document.getElementById(req.data.id));
       }
     });
   }
@@ -159,7 +157,7 @@ class Ali {
       ) {
         this.buildStatus();
         this.testConnectionToFrames();
-        this.deleteAllBarrenFrames();
+        this.deleteFrames();
 
         this.getContactLinks();
         this.openContactLinks(this.cntLnkArr);

@@ -66,7 +66,10 @@ class Background {
         case "testConnectionToFrames":
           if (request.data.connection) {
             chrome.tabs.sendMessage(sender.tab.id, {
-              connection: request.data.msg,
+              type: "testingConnections",
+              data: {
+                connection: request.data.msg,
+              },
             });
           }
           sendResponse({ msg: "Connections Made!" });
@@ -74,7 +77,10 @@ class Background {
 
         case "closeThisIframe":
           chrome.tabs.sendMessage(sender.tab.id, {
-            url: request.data.url,
+            type: "deleteFrames",
+            data: {
+              id: request.data.id,
+            },
           });
           sendResponse({ msg: "Closing Ifrane!" });
           break;
