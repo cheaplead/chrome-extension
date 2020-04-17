@@ -29,6 +29,7 @@ class Search {
           !eM.includes("bing") &&
           !eM.includes("zoho") &&
           !eM.includes("hotmail") &&
+          !eM.includes("live") &&
           !eM.includes("msn") &&
           !eM.includes("outlook") &&
           !eM.includes("google") &&

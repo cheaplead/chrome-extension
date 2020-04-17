@@ -101,7 +101,7 @@ class Ali {
                         max-height: 100px;
                         color: #fcb917ff;
                         z-index: 2999;
-                        background-color: #28334aff;
+                        background-image: linear-gradient(to bottom, #434e83, #28334a 80%);
                         padding: 10px 15px;
                         transition: linear 0.25s;
                         box-shadow: 0px 2.5px 15px #ececec;
@@ -127,7 +127,7 @@ class Ali {
     // TEST
     var isTop = true;
     chrome.runtime.onMessage.addListener(function (req) {
-      if (req.type == testingConnections) {
+      if (req.type == "testingConnections") {
         console.log(`Testing connection: ${req.data.connection}`);
       }
     });

@@ -1,28 +1,8 @@
 Name: Cheaplead
 Url: https://cheaplead.net
+Slogan: Pull bulk leads in a jiffy...
 Ceo: Success Chukwu Uche
-Addr: 1 Bishop Court, Off Olowopopo, Gbetu Awoyaya, Ibeju-lekki, Lagos.
-Desc: We are a B2B lead providing network.
+Founder: Success Chukwu Uche
+Addres: 1 Bishop Court, Off Olowopopo, Gbetu Awoyaya, Ibeju-lekki, Lagos.
+Desc: We are a B2B leads providing network.
 Phone: 08118362567
-
-let countdown = `https://search.yahoo.com/search?p=%5B%40${domain}%5D`;
-    window.location.assign(countdown);
-    let x = countdown;
-    let y = setInterval(() => {
-      x = `https://www.bing.com/search?q=%5B%40${domain}%5D`;
-      countdown = x;
-      console.log(countdown);
-      if (x == `https://www.bing.com/search?q=%5B%40${domain}%5D`) {
-        clearInterval(y);
-        console.log("e don finish ", countdown);
-      }
-    }, 5000);
-
-    var req = new XMLHttpRequest();
-
-req.open('GET', 'proxy.php?url=http://www.google.com', false);
-req.send(null);
-
-if(req.status == 200) {
-   alert(req.responseText);
-}
