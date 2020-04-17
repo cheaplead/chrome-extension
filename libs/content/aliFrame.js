@@ -4,6 +4,7 @@ class AliFrame {
     this.exec();
   }
 
+  // Test connection to all created iframes
   testConnectionToFrames() {
     if (!window.isTop) {
       console.log("@aliFrame.js in frame");
@@ -17,6 +18,7 @@ class AliFrame {
     }
   }
 
+  // Get all domains available
   getDomains() {
     var mtchs;
     var rgEx = /(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z][a-zA-Z]{0,61}[a-zA-Z]/g;
@@ -39,6 +41,7 @@ class AliFrame {
           (mtch) =>
             !mtch.includes("alibaba") &&
             !mtch.includes("aibaba") &&
+            !mtch.includes("aliabab") &&
             !mtch.includes("ablibaba") &&
             !mtch.includes("abilbaba") &&
             !mtch.includes("allibaba") &&
@@ -70,46 +73,46 @@ class AliFrame {
             id: window.origin.split("://")[1].split(".")[0],
           },
         });
+      } else {
+        mtchs.forEach((mtch) =>
+          mtch != null
+            ? !mtch.includes("www.")
+              ? this.extnlDms.push(mtch)
+              : (() => {
+                  mtch.split("www.")[1].includes("http")
+                    ? mtch
+                        .split("www.")[1]
+                        .split("http")[0]
+                        .match(rgEx)
+                        .forEach((mval) =>
+                          mval != null
+                            ? (() => {
+                                this.extnlDms.push(mval);
+                                setTimeout(() => {
+                                  window.stop();
+                                  this.startSearches(mval);
+                                }, 1000);
+                              })()
+                            : ""
+                        )
+                    : mtch
+                        .split("www.")[1]
+                        .match(rgEx)
+                        .forEach((mval) =>
+                          mval != null
+                            ? (() => {
+                                this.extnlDms.push(mval);
+                                setTimeout(() => {
+                                  window.stop();
+                                  this.startSearches(mval);
+                                }, 1000);
+                              })()
+                            : ""
+                        );
+                })()
+            : ""
+        );
       }
-
-      mtchs.forEach((mtch) =>
-        mtch != null
-          ? !mtch.includes("www.")
-            ? this.extnlDms.push(mtch)
-            : (() => {
-                mtch.split("www.")[1].includes("http")
-                  ? mtch
-                      .split("www.")[1]
-                      .split("http")[0]
-                      .match(rgEx)
-                      .forEach((mval) =>
-                        mval != null
-                          ? (() => {
-                              this.extnlDms.push(mval);
-                              setTimeout(() => {
-                                window.stop();
-                                this.startSearches();
-                              }, 2500);
-                            })()
-                          : ""
-                      )
-                  : mtch
-                      .split("www.")[1]
-                      .match(rgEx)
-                      .forEach((mval) =>
-                        mval != null
-                          ? (() => {
-                              this.extnlDms.push(mval);
-                              setTimeout(() => {
-                                window.stop();
-                                this.startSearches();
-                              }, 2500);
-                            })()
-                          : ""
-                      );
-              })()
-          : ""
-      );
     }
 
     chrome.runtime.sendMessage({
@@ -118,11 +121,36 @@ class AliFrame {
     });
   }
 
-  startSearches() {}
+  // Start the search engines
+  startSearches(domain) {
+    chrome.runtime.sendMessage({
+      type: "setUrlToIframeSrc",
+      data: {
+        id: window.origin.split("://")[1].split(".")[0],
+        url: `https://www.bing.com/search?q=[@${domain}]&from=cheaplead&nextUrl=https://search.yahoo.com/search?p=[@${domain}]&from=cheaplead`,
+      },
+    });
+  }
+
+  // closes every error page that occurs in the frames
+  closeEveryErrorPage() {
+    if (
+      window.location.href.includes("error404") ||
+      window.location.href.includes("error.alibaba.com")
+    ) {
+      chrome.runtime.sendMessage({
+        type: "closeThisIframe",
+        data: {
+          id: window.origin.split("://")[1].split(".")[0],
+        },
+      });
+    }
+  }
 
   // Main method, the execute method.
   exec() {
     this.testConnectionToFrames();
+    this.closeEveryErrorPage();
     this.getDomains();
   }
 }

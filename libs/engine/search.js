@@ -1,14 +1,19 @@
 class Search {
   constructor() {
     this.extnlEms = [];
-
-    this.fetchEmails();
-    chrome.runtime.sendMessage({
-      type: "arrangeEmails",
-      data: { ems: this.extnlEms },
-    });
+    this.exec();
   }
 
+  // Changes the current Url to the appended url in the query [nextUrl]
+  changeToNextUrl() {
+    var urlParams = $.deparam(window.location.search);
+
+    setTimeout(() => {
+      window.location.replace(urlParams.nextUrl);
+    }, 2500);
+  }
+
+  // Fetches all it's emails
   fetchEmails() {
     var eMtchs,
       regEx = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi,
@@ -53,11 +58,20 @@ class Search {
           !eM.includes("icloud")
       );
       eMtchs.forEach((eMtch) => {
-        !this.extnlEms.includes(eMtch)
-          ? eMtch.trim() && this.extnlEms.push(eMtch)
-          : "";
+        !this.extnlEms.includes(eMtch) ? this.extnlEms.push(eMtch.trim()) : "";
       });
     }
+
+    chrome.runtime.sendMessage({
+      type: "arrangeEmails",
+      data: { ems: this.extnlEms },
+    });
+  }
+
+  // Main method, the execute method.
+  exec() {
+    this.fetchEmails();
+    this.changeToNextUrl();
   }
 }
 

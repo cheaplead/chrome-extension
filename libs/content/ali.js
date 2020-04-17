@@ -145,6 +145,18 @@ class Ali {
     });
   }
 
+  // Change src attr to req.data.url, to start search engines
+  setUrlToSrc() {
+    chrome.runtime.onMessage.addListener(function (req) {
+      if (req.type == "setUrlToSrc") {
+        // window.frames[`${req.data.id}`].contentWindow.location.replace(
+        //   req.data.url
+        // );
+        document.getElementById(req.data.id).src = req.data.url;
+      }
+    });
+  }
+
   // Main method, the execute method.
   exec(locHref) {
     // Run only id it's from cheaplead, i.e on if location.href has "from=cheaplead"
@@ -158,6 +170,7 @@ class Ali {
         this.buildStatus();
         this.testConnectionToFrames();
         this.deleteFrames();
+        this.setUrlToSrc();
 
         this.getContactLinks();
         this.openContactLinks(this.cntLnkArr);

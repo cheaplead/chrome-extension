@@ -9,19 +9,20 @@ class Background {
     this.exec();
 
     console.log("Bg Domains: ", this.window.domains);
+    console.log("Bg Emails: ", this.window.emails);
   }
 
   // Arranges the domains from content scripts in the Popup
   arrangeDms(dms) {
-    if (dms != null) {
+    if (dms != null && dms != undefined) {
       if (dms.length > 0) {
         dms.forEach((dm) => {
           !this.window.domains.includes(dm)
             ? (() => {
                 this.window.domains.push(dm);
-                chrome.browserAction.setBadgeText({
-                  text: this.window.domains.length.toString(),
-                });
+                // chrome.browserAction.setBadgeText({
+                //   text: this.window.domains.length.toString(),
+                // });
               })()
             : "";
         });
@@ -33,17 +34,15 @@ class Background {
   arrangeEms(ems) {
     if (ems != null && ems != undefined) {
       if (ems.length > 0) {
-        ems.forEach((emObj) => {
-          for (const key in emObj) {
-            if (emObj.hasOwnProperty(key)) {
-              const emArr = emObj[key];
-              for (const em of emArr) {
-                !this.window.emails.includes(em)
-                  ? this.window.emails.push(em)
-                  : "";
-              }
-            }
-          }
+        ems.forEach((em) => {
+          !this.window.emails.includes(em)
+            ? (() => {
+                this.window.emails.push(em);
+                chrome.browserAction.setBadgeText({
+                  text: `E: ${this.window.emails.length.toString()}`,
+                });
+              })()
+            : "";
         });
       }
     }
@@ -82,7 +81,18 @@ class Background {
               id: request.data.id,
             },
           });
-          sendResponse({ msg: "Closing Ifrane!" });
+          sendResponse({ msg: "Closing Iframe!" });
+          break;
+
+        case "setUrlToIframeSrc":
+          chrome.tabs.sendMessage(sender.tab.id, {
+            type: "setUrlToSrc",
+            data: {
+              id: request.data.id,
+              url: request.data.url,
+            },
+          });
+          sendResponse({ msg: "Setting urls to iframe's src!" });
           break;
 
         default:
