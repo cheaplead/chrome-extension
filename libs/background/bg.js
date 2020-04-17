@@ -84,6 +84,13 @@ class Background {
           sendResponse({ msg: "Closing Iframe!" });
           break;
 
+        case "removeCustomElements":
+          chrome.runtime.sendMessage({
+            type: "removeCustomElementsOnClearBtn",
+          });
+          sendResponse({ msg: "Closing all Custom Elements!" });
+          break;
+
         case "setUrlToIframeSrc":
           chrome.tabs.sendMessage(sender.tab.id, {
             type: "setUrlToSrc",

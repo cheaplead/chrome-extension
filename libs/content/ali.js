@@ -51,7 +51,7 @@ class Ali {
       setAttributes(ifrm, { id: ifrmId, src: url });
 
       // Append it to ifrmCon
-      this.handleStatus(`Loading iframes...`);
+      this.handleStatus(`Pulling...`);
       document.getElementById("ifrmCon").prepend(ifrm);
     };
 
@@ -134,6 +134,23 @@ class Ali {
     // TEST
   }
 
+  // Removes all custom made html elements when user click ["clear"] button
+  removeCustomElementsOnClearBtn() {
+    var ifrmCon = document.getElementById("ifrmCon");
+    var statusCon = document.getElementById("status");
+    var statusMsg = document.getElementById("statusMsg");
+
+    chrome.runtime.onMessage.addListener(function (req) {
+      if (req.type == "removeCustomElementsOnClearBtn") {
+        if (ifrmCon != null) {
+          statusMsg.innerHTML = "";
+          statusCon.style.display = "none";
+          ifrmCon.parentNode.removeChild(ifrmCon);
+        }
+      }
+    });
+  }
+
   // Delete all Frames without domains and frames after extraction of domains
   deleteFrames() {
     chrome.runtime.onMessage.addListener(function (req) {
@@ -169,11 +186,19 @@ class Ali {
       ) {
         this.buildStatus();
         this.testConnectionToFrames();
+        this.removeCustomElementsOnClearBtn();
         this.deleteFrames();
         this.setUrlToSrc();
 
         this.getContactLinks();
         this.openContactLinks(this.cntLnkArr);
+        document.onreadystatechange = () => {
+          document.readyState === "complete"
+            ? document.getElementById("ifrmCon") != null
+              ? this.handleStatus("Pulling completed!")
+              : this.handleStatus(`Cheaplead wasn't allowed!`)
+            : "";
+        };
       }
     }
   }

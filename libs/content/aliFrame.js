@@ -154,4 +154,5 @@ class AliFrame {
     this.getDomains();
   }
 }
+
 new AliFrame();

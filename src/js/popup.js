@@ -6,13 +6,13 @@ class PopUp {
     this.bgDms = this.bgWindow != undefined ? this.bgWindow.domains : undefined;
     this.bgEms = this.bgWindow != undefined ? this.bgWindow.emails : undefined;
 
-    this.errorBox = $("#errorBox");
     this.textBox = $(".inputCon #filterSearch");
-    this.startBtn = $(".buttonCon .buttons button#startPulling");
+    this.errorBox = $("#errorBox");
     this.totalDms = $(".resultCon #totalDomains");
     this.totalEms = $(".resultCon #totalEmails");
-    this.copyResBtn = $(".resultCon #copyResultBtn");
+    this.startBtn = $(".buttonCon .buttons button#startPulling");
     this.resultCon = $(".resultCon .resultMain .result");
+    this.copyResBtn = $(".resultCon #copyResultBtn");
     this.resultEmails = $(".resultCon .resultMain .result#emails");
     this.resultDomains = $(".resultCon .resultMain .result#domains");
 
@@ -75,7 +75,10 @@ class PopUp {
             this.errorBox.html('Enter a correct domain, e.g "example.com"');
           })();
     });
+  }
 
+  // Cleaans everything for the app, to start again
+  clearAll() {
     $("#clear").click(() => {
       this.bgWindow.locationUrl = "";
       this.bgWindow.domains = [];
@@ -93,9 +96,8 @@ class PopUp {
 
       $(".totalValsCon").hide();
 
-      chrome.browserAction.setBadgeText({
-        text: "",
-      });
+      chrome.browserAction.setBadgeText({ text: "" });
+      chrome.runtime.sendMessage({ type: "removeCustomElements" });
     });
   }
 
@@ -133,7 +135,8 @@ class PopUp {
         $(".totalValsCon").show();
         this.copyResBtn.show();
         this.totalDms.text(`${this.bgDms.length} `);
-        // this.resultDomains.hide();
+        this.resultDomains.html("");
+        this.resultDomains.hide();
       } else {
         $(".resultCon .resultMain")
           .removeClass("inResultBox")
@@ -185,6 +188,7 @@ class PopUp {
     this.copyResults();
     this.displayDomains();
     this.displayEmails();
+    this.clearAll();
     this.setVersion();
   }
 }

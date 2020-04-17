@@ -136,6 +136,7 @@ body {
   display: inline-block;
   border-radius: 50px;
   background-color: #28334aff;
+  background-image: linear-gradient(to top, #28334aff, #364566ff 60%);
   border: none;
   color: #fcb917ff;
   text-align: center;
@@ -164,7 +165,7 @@ body {
 }
 
 .actionCon .buttonCon button.isButton:hover span {
-  padding-right: 15px;
+  padding-right: 12.5px;
 }
 
 .actionCon .buttonCon button.isButton:hover span:after {

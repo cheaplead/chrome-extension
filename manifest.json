@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Cheaplead",
-  "version": "0.1.90",
+  "version": "0.2.9",
   "description": "A tool that pulls bulk email addresses in a jiffy, on a click.",
   "homepage_url": "https://cheaplead.net",
   "author": "https://cheaplead.net",
