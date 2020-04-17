@@ -7,8 +7,6 @@ class AliFrame {
   // Test connection to all created iframes
   testConnectionToFrames() {
     if (!window.isTop) {
-      console.log("@aliFrame.js in frame");
-
       var msg = "Connected to iframes";
       // Send message to top frame, for example:
       chrome.runtime.sendMessage({

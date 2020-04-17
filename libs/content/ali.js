@@ -84,7 +84,6 @@ class Ali {
       });
     } else {
       this.handleStatus(`Cheaplead wasn't allowed!`);
-      console.log("Cheaplead wasn't allowed!");
     }
   }
 
@@ -128,7 +127,7 @@ class Ali {
     var isTop = true;
     chrome.runtime.onMessage.addListener(function (req) {
       if (req.type == "testingConnections") {
-        console.log(`Testing connection: ${req.data.connection}`);
+        console.info(`Testing connection: ${req.data.connection}`);
       }
     });
     // TEST
