@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Cheaplead • Pull bulk leads in a jiffy",
-  "version": "0.3.50",
+  "version": "0.3.85",
   "description": "A tool that pulls bulk email addresses in a jiffy, on a click.",
   "homepage_url": "https://cheaplead.net",
   "author": "https://cheaplead.net",
@@ -19,7 +19,7 @@
       "128": "./icons/icon128.png"
     },
     "default_popup": "./src/popup.html",
-    "default_title": "Cheaplead • Pull bulk leads in a jiffy"
+    "default_title": "Cheaplead • Pull bulk leads in a jiffy - (Extension)"
   },
   "background": {
     "persistent": true,

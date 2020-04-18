@@ -22,17 +22,24 @@ class AliFrame {
     var rgEx = /(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z][a-zA-Z]{0,61}[a-zA-Z]/g;
     var dmVal =
       document.querySelectorAll("div.mod-content > div > table")[0] != undefined
-        ? document
-            .querySelectorAll("div.mod-content > div > table")[0]
-            .rows[2].cells[1].innerText.toLowerCase()
-        : document
-            .querySelectorAll(
+        ? document.querySelectorAll("div.mod-content > div > table")[0]
+            .rows[2] != undefined
+          ? document
+              .querySelectorAll("div.mod-content > div > table")[0]
+              .rows[2].cells[1].innerText.toLowerCase()
+          : document.querySelectorAll(
               "#site_content > div.grid-main > div > div.mod.mod-companyContact.app-companyContact.mod-ui-not-show-title > article > div > table > tbody > tr:nth-child(3) > td:nth-child(3)"
-            )[0]
-            .innerText.toLowerCase();
+            )[0] != undefined
+          ? document
+              .querySelectorAll(
+                "#site_content > div.grid-main > div > div.mod.mod-companyContact.app-companyContact.mod-ui-not-show-title > article > div > table > tbody > tr:nth-child(3) > td:nth-child(3)"
+              )[0]
+              .innerText.toLowerCase()
+          : undefined
+        : undefined;
 
     // Checks if "dmVal" has a value. i.e not ['null'] nor ['undefined']
-    if (typeof dmVal != "undefined" || typeof dmVal != null) {
+    if (dmVal != undefined || dmVal != null) {
       mtchs = dmVal
         .match(rgEx)
         .filter(

@@ -1,6 +1,10 @@
 class GenericFetcher {
   constructor() {
+    console.log("Hi, from GenericFetcher");
+    this.bodyHtml = document.body.innerHTML;
+    this.extLinks = [];
     this.domain = "";
+
     !location.hostname.includes("www.")
       ? (this.domain = location.hostname)
       : (() => {
@@ -12,42 +16,42 @@ class GenericFetcher {
 
     // nextUrl = `https://search.yahoo.com/search?p=[@${this.domain}]&from=cheaplead`;
     this.url = `https://www.bing.com/search?q=[@${this.domain}]&from=cheaplead`;
+
     this.exec();
   }
 
-  // Opens iframes for searches
-  openIframes(_url = "") {
-    const setAttributes = (el, attrs) => {
-      for (var key in attrs) {
-        el.setAttribute(key, attrs[key]);
-      }
-    };
+  // Set multiple attribute to element
+  setAttributes(el, attrs) {
+    for (var key in attrs) {
+      el.setAttribute(key, attrs[key]);
+    }
+  }
 
-    // Creates iframes for search
-    const createIframesForSearch = (url) => {
-      // Get the first word before "://" and the first dot "."
-      var ifrmId = "searchFrame";
-
-      // Create iframe and set it's attributes
-      var ifrm = document.createElement("iframe");
-      setAttributes(ifrm, { id: ifrmId, src: url });
-
-      // Append it to ifrmCon
-      document.getElementById("ifrmCon").prepend(ifrm);
-    };
-
+  // Opens iframes
+  openIframes(url = "") {
     // Creates iframe container for the iframes created
-    const createIframeContainer = (url) => {
-      var ifrmCon = document.createElement("section");
-      ifrmCon.style.cssText = `width: 100%; overflow: hidden; display: none`;
-      setAttributes(ifrmCon, { id: "ifrmCon" });
-      document.body.prepend(ifrmCon);
+    var ifrmCon = document.createElement("section");
+    ifrmCon.style.cssText = `width: 100%; overflow: hidden; display: none`;
+    this.setAttributes(ifrmCon, { id: "ifrmCon" });
+    document.body.prepend(ifrmCon);
 
-      createIframesForSearch(url);
-      this.handleStatus(`Pulling leads...`);
-    };
+    this.createIframe(url);
+    this.handleStatus(`Pulling leads...`);
+  }
 
-    createIframeContainer(_url);
+  // Creates iframes
+  createIframe(url) {
+    // Get the first word before "://" and the first dot "."
+    var ifrmId = url.split("://")[1].split(".")[0].includes("www")
+      ? url.split("://")[1].split(".")[1]
+      : url.split("://")[1].split(".")[0];
+
+    // Create iframe and set it's attributes
+    var ifrm = document.createElement("iframe");
+    this.setAttributes(ifrm, { id: ifrmId, src: url });
+
+    // Append it to ifrmCon
+    document.getElementById("ifrmCon").prepend(ifrm);
   }
 
   // Build the status popup floating box at the right hand that shows all progress on the extraction
@@ -72,7 +76,7 @@ class GenericFetcher {
         max-height: 100px;
         font-family: "BreeSerif", sans-serif !important;
         z-index: 2999;
-        background-image: linear-gradient(to bottom, #434e83, #28334a 80%);
+        background-color: #28324a;
         padding: 10px 15px;
         transition: linear 0.25s;
         border-radius: 50px 0px 0px 50px;
@@ -100,18 +104,78 @@ class GenericFetcher {
     $("#statusMsg span").text(msg);
   }
 
+  // Find "location.hostname/about" links in bodyHtml
+  fetchAndOpenLinkUrl(htmlBody) {
+    var linkAbouts, linkContacts;
+    const regEx = /<a\s+(?:[^>]*?\s+)?href=(["'])(.*?)\1/gi;
+    var linksRes = htmlBody.toLowerCase().trim().match(regEx);
+
+    if (linksRes != null) {
+      linkAbouts = linksRes.filter(
+        (link) => link.trim().includes("about") && !link.trim().includes("/#")
+      );
+      linkContacts = linksRes.filter(
+        (link) => link.trim().includes("contact") && !link.trim().includes("/#")
+      );
+
+      linkAbouts.forEach((lA) =>
+        !this.extLinks.includes(lA)
+          ? (() => {
+              lA = lA.split(`"`) || lA.split(`'`);
+              lA.forEach((la) => {
+                la = la.split("?")[0];
+                la.includes("about")
+                  ? !this.extLinks.includes(la)
+                    ? !la.includes("://")
+                      ? this.extLinks.push(
+                          `${location.protocol}//${location.host}/${la}`
+                        )
+                      : this.extLinks.push(`${la}`)
+                    : ""
+                  : "";
+              });
+            })()
+          : ""
+      );
+      linkContacts.forEach((lC) =>
+        !this.extLinks.includes(lC)
+          ? (() => {
+              lC = lC.split(`"`) || lC.split(`'`);
+              lC.forEach((lc) => {
+                lc = lc.split("?")[0];
+                lc.includes("contact")
+                  ? !this.extLinks.includes(lc)
+                    ? !lc.includes("://")
+                      ? this.extLinks.push(
+                          `${location.protocol}//${location.host}/${lc}`
+                        )
+                      : this.extLinks.push(`${lc}`)
+                    : ""
+                  : "";
+              });
+            })()
+          : ""
+      );
+
+      console.log("external Links: ", this.extLinks);
+      this.handleStatus(`Routing to pages...`);
+      this.extLinks.forEach((linkUrl) => this.createIframe(linkUrl));
+    }
+  }
+
   // Main method, the execute method.
   exec() {
     this.buildStatus();
     this.openIframes(this.url);
+    this.fetchAndOpenLinkUrl(this.bodyHtml);
 
-    document.onreadystatechange = () => {
-      document.readyState === "complete"
-        ? document.getElementById("ifrmCon") != null
-          ? this.handleStatus("Pulling completed!")
-          : this.handleStatus(`Cheaplead wasn't allowed!`)
-        : "";
-    };
+    // document.onreadystatechange = () => {
+    //   document.readyState === "complete"
+    //     ? document.getElementById("ifrmCon") != null
+    //       ? this.handleStatus("Pulling completed!")
+    //       : this.handleStatus(`Cheaplead wasn't allowed!`)
+    //     : "";
+    // };
   }
 }
 

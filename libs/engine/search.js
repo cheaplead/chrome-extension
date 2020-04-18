@@ -34,6 +34,7 @@ class Search {
           !eM.includes("live") &&
           !eM.includes("msn") &&
           !eM.includes("outlook") &&
+          !eM.includes("linkedin") &&
           !eM.includes("google") &&
           !eM.includes("alibaba") &&
           !eM.includes("aibaba") &&
@@ -61,7 +62,23 @@ class Search {
           !eM.includes("icloud")
       );
       eMtchs.forEach((eMtch) => {
-        !this.extnlEms.includes(eMtch) ? this.extnlEms.push(eMtch.trim()) : "";
+        eMtch = eMtch.trim().toLowerCase();
+        !this.extnlEms.includes(eMtch)
+          ? (() => {
+              // get email's tld (.com, .net etc...) and get rid of all other words joined to those tlds
+              var emailTld = eMtch.split(/\./gi)[
+                eMtch.split(/\./gi).length - 1
+              ];
+
+              emailTld.charAt(0) == "c" &&
+              emailTld.charAt(1) == "o" &&
+              emailTld.charAt(2) == "m"
+                ? this.extnlEms.push(eMtch.replace(emailTld, "com"))
+                : emailTld.charAt(0) == "c" && emailTld.charAt(1) == "n"
+                ? this.extnlEms.push(eMtch.replace(emailTld, "cn"))
+                : this.extnlEms.push(eMtch);
+            })()
+          : "";
       });
     }
 

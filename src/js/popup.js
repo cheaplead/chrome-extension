@@ -44,7 +44,10 @@ class PopUp {
         ? (() => {
             if (this.textBox.val().includes("alibaba")) {
               if (!this.textBox.val().includes("http")) {
-                this.bgWindow.locationUrl = `http://${this.textBox.val()}`;
+                this.bgWindow.locationUrl =
+                  this.textBox.val().match(/\./gi).length < 1
+                    ? `http://www.${this.textBox.val()}`
+                    : `http://${this.textBox.val()}`;
 
                 this.bgWindow.locationUrl.includes("?") &&
                 !this.bgWindow.locationUrl.includes("=cheaplead")
@@ -68,7 +71,10 @@ class PopUp {
               }
             } else {
               if (!this.textBox.val().includes("http")) {
-                this.bgWindow.locationUrl = `http://${this.textBox.val()}`;
+                this.bgWindow.locationUrl =
+                  this.textBox.val().match(/\./gi).length < 1
+                    ? `http://www.${this.textBox.val()}`
+                    : `http://${this.textBox.val()}`;
 
                 this.bgWindow.locationUrl.includes("?") &&
                 !this.bgWindow.locationUrl.includes("=cheaplead")
@@ -154,20 +160,12 @@ class PopUp {
     this.bgDms.forEach((bgDm) => {
       this.resultDomains.append(`<span id="dms">${bgDm}\n</span>`);
       if (this.bgDms.length > 0) {
-        $(".resultCon .resultMain")
-          .addClass("inResultBox")
-          .css("background-image", "none");
-
         $(".totalValsCon").show();
         $("#totalDomainsCon").css("display", "inline");
         this.copyResBtn.show();
         this.totalDms.text(`${this.bgDms.length} `);
         this.resultDomains.html("");
         this.resultDomains.hide();
-      } else {
-        $(".resultCon .resultMain")
-          .removeClass("inResultBox")
-          .css("background-image", `url("../img/loading.gif")`);
       }
     });
   }
@@ -177,18 +175,10 @@ class PopUp {
     this.bgEms.forEach((bgEm) => {
       this.resultEmails.append(`<span id="ems">${bgEm}\n</span>`);
       if (this.bgEms.length > 0) {
-        $(".resultCon .resultMain")
-          .addClass("inResultBox")
-          .css("background-image", "none");
-
         $(".totalValsCon").show();
         $("#totalEmailsCon").css("display", "inline");
         this.copyResBtn.show();
         this.totalEms.text(`${this.bgEms.length} `);
-      } else {
-        $(".resultCon .resultMain")
-          .removeClass("inResultBox")
-          .css("background-image", `url("../img/loading.gif")`);
       }
     });
   }

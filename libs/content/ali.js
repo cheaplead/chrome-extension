@@ -109,7 +109,7 @@ class Ali {
         max-height: 100px;
         font-family: "BreeSerif", sans-serif !important;
         z-index: 2999;
-        background-image: linear-gradient(to bottom, #434e83, #28334a 80%);
+        background-color: #28324a;
         padding: 10px 15px;
         transition: linear 0.25s;
         border-radius: 50px 0px 0px 50px;
@@ -142,7 +142,7 @@ class Ali {
     var isTop = true;
     chrome.runtime.onMessage.addListener(function (req) {
       if (req.type == "testingConnections") {
-        console.info(`Frames: ${req.data.connection} connected!`);
+        // console.info(`Frames: ${req.data.connection} connected!`);
       }
     });
   }

@@ -190,7 +190,6 @@ body {
   height: 200px;
   overflow-x: hidden;
   overflow-y: scroll;
-  /* background-image: url("../img/loader.gif"); */
   background-blend-mode: screen;
   background-position: center;
   background-size: 8%;
