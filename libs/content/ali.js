@@ -51,7 +51,7 @@ class Ali {
       setAttributes(ifrm, { id: ifrmId, src: url });
 
       // Append it to ifrmCon
-      this.handleStatus(`Pulling...`);
+      this.handleStatus(`Pulling leads...`);
       document.getElementById("ifrmCon").prepend(ifrm);
     };
 
@@ -89,29 +89,45 @@ class Ali {
 
   // Build the status popup floating box at the right hand that shows all progress on the extraction
   buildStatus() {
-    var html = `<section class="status" id="status" style="
-                        display: flex;
-                        align-items: center;
-                        position: fixed;
-                        top: 10%;
-                        right: 0;
-                        max-width: 300px;
-                        min-height: 20px;
-                        max-height: 100px;
-                        color: #fcb917ff;
-                        z-index: 2999;
-                        background-image: linear-gradient(to bottom, #434e83, #28334a 80%);
-                        padding: 10px 15px;
-                        transition: linear 0.25s;
-                        box-shadow: 0px 2.5px 15px #ececec;
-                        border-radius: 50px 0px 0px 50px;">
-                    <img src="${chrome.runtime.getURL(
-                      "icons/icon.png"
-                    )}" width="20" alt="https://cheaplead.net"/>
-                    <div id="statusMsg" style="margin-left: 5px; margin-top: 2px; font-size: 13px;">
-                      <span></span>
-                    </div>
-                </section>`;
+    var html = `
+    <style>
+      @font-face {
+        font-family: "BreeSerif";
+        src: url(${chrome.runtime.getURL(
+          "src/fonts/BreeSerif/BreeSerif-Regular.otf"
+        )})
+      }
+
+      .status#status {
+        display: flex;
+        align-items: center;
+        position: fixed;
+        top: 15%;
+        right: 0;
+        max-width: 300px;
+        min-height: 20px;
+        max-height: 100px;
+        font-family: "BreeSerif", sans-serif !important;
+        z-index: 2999;
+        background-image: linear-gradient(to bottom, #434e83, #28334a 80%);
+        padding: 10px 15px;
+        transition: linear 0.25s;
+        border-radius: 50px 0px 0px 50px;
+      }
+
+      .status #statusMsg * {
+        color: #fcb917ff !important;
+      }
+      
+    </style>
+    <section class="status" id="status">
+        <img src="${chrome.runtime.getURL(
+          "icons/icon.png"
+        )}" width="20" alt="https://cheaplead.net"/>
+        <div id="statusMsg" style="margin-left: 5px; margin-top: -2px; font-size: 13px;">
+          <span></span>
+        </div>
+    </section>`;
 
     $(html).prependTo("body");
   }
@@ -123,14 +139,12 @@ class Ali {
 
   // Test connection to all iframes created.
   testConnectionToFrames() {
-    // TEST
     var isTop = true;
     chrome.runtime.onMessage.addListener(function (req) {
       if (req.type == "testingConnections") {
-        console.info(`Testing connection: ${req.data.connection}`);
+        console.info(`Frames: ${req.data.connection} connected!`);
       }
     });
-    // TEST
   }
 
   // Removes all custom made html elements when user click ["clear"] button
@@ -165,9 +179,6 @@ class Ali {
   setUrlToSrc() {
     chrome.runtime.onMessage.addListener(function (req) {
       if (req.type == "setUrlToSrc") {
-        // window.frames[`${req.data.id}`].contentWindow.location.replace(
-        //   req.data.url
-        // );
         document.getElementById(req.data.id).src = req.data.url;
       }
     });

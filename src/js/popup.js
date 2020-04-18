@@ -42,28 +42,54 @@ class PopUp {
       // Place "https://" in front if not available and from=cheaplead if not available
       this.textBox.val().match(dmRegEx)
         ? (() => {
-            if (!this.textBox.val().includes("http")) {
-              this.bgWindow.locationUrl = `https://${this.textBox.val()}`;
+            if (this.textBox.val().includes("alibaba")) {
+              if (!this.textBox.val().includes("http")) {
+                this.bgWindow.locationUrl = `https://${this.textBox.val()}`;
 
-              this.bgWindow.locationUrl.includes("?") &&
-              !this.bgWindow.locationUrl.includes("=cheaplead")
-                ? (this.bgWindow.locationUrl = `${this.bgWindow.locationUrl}&from=cheaplead`)
-                : "";
+                this.bgWindow.locationUrl.includes("?") &&
+                !this.bgWindow.locationUrl.includes("=cheaplead")
+                  ? (this.bgWindow.locationUrl = `${this.bgWindow.locationUrl}&from=cheaplead`)
+                  : "";
 
-              !this.bgWindow.locationUrl.includes("?")
-                ? (this.bgWindow.locationUrl = `${this.bgWindow.locationUrl}?from=cheaplead`)
-                : "";
+                !this.bgWindow.locationUrl.includes("?")
+                  ? (this.bgWindow.locationUrl = `${this.bgWindow.locationUrl}?from=cheaplead`)
+                  : "";
+              } else {
+                this.bgWindow.locationUrl = `${this.textBox.val()}`;
+
+                this.bgWindow.locationUrl.includes("?") &&
+                !this.bgWindow.locationUrl.includes("=cheaplead")
+                  ? (this.bgWindow.locationUrl = `${this.bgWindow.locationUrl}&from=cheaplead`)
+                  : "";
+
+                !this.bgWindow.locationUrl.includes("?")
+                  ? (this.bgWindow.locationUrl = `${this.bgWindow.locationUrl}?from=cheaplead`)
+                  : "";
+              }
             } else {
-              this.bgWindow.locationUrl = `${this.textBox.val()}`;
+              if (!this.textBox.val().includes("http")) {
+                this.bgWindow.locationUrl = `https://${this.textBox.val()}`;
 
-              this.bgWindow.locationUrl.includes("?") &&
-              !this.bgWindow.locationUrl.includes("=cheaplead")
-                ? (this.bgWindow.locationUrl = `${this.bgWindow.locationUrl}&from=cheaplead`)
-                : "";
+                this.bgWindow.locationUrl.includes("?") &&
+                !this.bgWindow.locationUrl.includes("=cheaplead")
+                  ? (this.bgWindow.locationUrl = `${this.bgWindow.locationUrl}&from=cheaplead&type=justDomain`)
+                  : "";
 
-              !this.bgWindow.locationUrl.includes("?")
-                ? (this.bgWindow.locationUrl = `${this.bgWindow.locationUrl}?from=cheaplead`)
-                : "";
+                !this.bgWindow.locationUrl.includes("?")
+                  ? (this.bgWindow.locationUrl = `${this.bgWindow.locationUrl}?from=cheaplead&type=justDomain`)
+                  : "";
+              } else {
+                this.bgWindow.locationUrl = `${this.textBox.val()}`;
+
+                this.bgWindow.locationUrl.includes("?") &&
+                !this.bgWindow.locationUrl.includes("=cheaplead")
+                  ? (this.bgWindow.locationUrl = `${this.bgWindow.locationUrl}&from=cheaplead&type=justDomain`)
+                  : "";
+
+                !this.bgWindow.locationUrl.includes("?")
+                  ? (this.bgWindow.locationUrl = `${this.bgWindow.locationUrl}?from=cheaplead&type=justDomain`)
+                  : "";
+              }
             }
             chrome.tabs.create({
               url: this.bgWindow.locationUrl,

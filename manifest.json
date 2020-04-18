@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
-  "name": "Cheaplead",
-  "version": "0.2.35",
+  "name": "Cheaplead • Pull bulk leads in a jiffy",
+  "version": "0.2.98",
   "description": "A tool that pulls bulk email addresses in a jiffy, on a click.",
   "homepage_url": "https://cheaplead.net",
   "author": "https://cheaplead.net",
@@ -19,7 +19,7 @@
       "128": "./icons/icon128.png"
     },
     "default_popup": "./src/popup.html",
-    "default_title": "Cheaplead"
+    "default_title": "Cheaplead • Pull bulk leads in a jiffy"
   },
   "background": {
     "persistent": true,
@@ -29,6 +29,10 @@
     {
       "matches": ["<all_urls>"],
       "js": ["./libs/content/jquery-3.4.1.min.js", "./libs/content/deparam.js"]
+    },
+    {
+      "matches": ["*://*/*from=cheaplead&type=justDomain"],
+      "js": ["./libs/content/genericFetcher.js"]
     },
     {
       "matches": ["*://*.alibaba.com/*from=cheaplead*"],
@@ -53,7 +57,10 @@
       "all_frames": true
     }
   ],
-  "web_accessible_resources": ["icons/icon.png"],
+  "web_accessible_resources": [
+    "icons/icon.png",
+    "src/fonts/BreeSerif/BreeSerif-Regular.otf"
+  ],
   "permissions": [
     "background",
     "storage",
