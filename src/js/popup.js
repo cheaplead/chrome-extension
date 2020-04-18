@@ -44,7 +44,7 @@ class PopUp {
         ? (() => {
             if (this.textBox.val().includes("alibaba")) {
               if (!this.textBox.val().includes("http")) {
-                this.bgWindow.locationUrl = `https://${this.textBox.val()}`;
+                this.bgWindow.locationUrl = `http://${this.textBox.val()}`;
 
                 this.bgWindow.locationUrl.includes("?") &&
                 !this.bgWindow.locationUrl.includes("=cheaplead")
@@ -68,7 +68,7 @@ class PopUp {
               }
             } else {
               if (!this.textBox.val().includes("http")) {
-                this.bgWindow.locationUrl = `https://${this.textBox.val()}`;
+                this.bgWindow.locationUrl = `http://${this.textBox.val()}`;
 
                 this.bgWindow.locationUrl.includes("?") &&
                 !this.bgWindow.locationUrl.includes("=cheaplead")
@@ -159,6 +159,7 @@ class PopUp {
           .css("background-image", "none");
 
         $(".totalValsCon").show();
+        $("#totalDomainsCon").css("display", "inline");
         this.copyResBtn.show();
         this.totalDms.text(`${this.bgDms.length} `);
         this.resultDomains.html("");
@@ -181,6 +182,7 @@ class PopUp {
           .css("background-image", "none");
 
         $(".totalValsCon").show();
+        $("#totalEmailsCon").css("display", "inline");
         this.copyResBtn.show();
         this.totalEms.text(`${this.bgEms.length} `);
       } else {

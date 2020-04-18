@@ -9,15 +9,14 @@ class GenericFetcher {
               ? location.hostname.split("www.")[0]
               : location.hostname.split("www.")[1];
         })();
-    this.urls = [
-      `https://www.bing.com/search?q=[@${this.domain}]&from=cheaplead&type=justDomain`,
-      `https://search.yahoo.com/search?p=[@${this.domain}]&from=cheaplead&type=justDomain`,
-    ];
+
+    // nextUrl = `https://search.yahoo.com/search?p=[@${this.domain}]&from=cheaplead`;
+    this.url = `https://www.bing.com/search?q=[@${this.domain}]&from=cheaplead`;
     this.exec();
   }
 
   // Opens iframes for searches
-  openIframes(_urls = []) {
+  openIframes(_url = "") {
     const setAttributes = (el, attrs) => {
       for (var key in attrs) {
         el.setAttribute(key, attrs[key]);
@@ -27,7 +26,7 @@ class GenericFetcher {
     // Creates iframes for search
     const createIframesForSearch = (url) => {
       // Get the first word before "://" and the first dot "."
-      var ifrmId = url.split("://")[1].split(".")[1];
+      var ifrmId = "searchFrame";
 
       // Create iframe and set it's attributes
       var ifrm = document.createElement("iframe");
@@ -37,20 +36,18 @@ class GenericFetcher {
       document.getElementById("ifrmCon").prepend(ifrm);
     };
 
-    // Creates iframe container
-    const createIframeContainer = (urls) => {
+    // Creates iframe container for the iframes created
+    const createIframeContainer = (url) => {
       var ifrmCon = document.createElement("section");
       ifrmCon.style.cssText = `width: 100%; overflow: hidden; display: none`;
       setAttributes(ifrmCon, { id: "ifrmCon" });
       document.body.prepend(ifrmCon);
 
-      urls.forEach((url) => {
-        createIframesForSearch(url);
-      });
+      createIframesForSearch(url);
       this.handleStatus(`Pulling leads...`);
     };
 
-    createIframeContainer(_urls);
+    createIframeContainer(_url);
   }
 
   // Build the status popup floating box at the right hand that shows all progress on the extraction
@@ -106,7 +103,7 @@ class GenericFetcher {
   // Main method, the execute method.
   exec() {
     this.buildStatus();
-    this.openIframes(this.urls);
+    this.openIframes(this.url);
 
     document.onreadystatechange = () => {
       document.readyState === "complete"

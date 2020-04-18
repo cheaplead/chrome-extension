@@ -8,9 +8,11 @@ class Search {
   changeToNextUrl() {
     var urlParams = $.deparam(window.location.search);
 
-    setTimeout(() => {
-      window.location.replace(urlParams.nextUrl);
-    }, 2500);
+    if (urlParams.nextUrl != null || urlParams.nextUrl != null) {
+      setTimeout(() => {
+        window.location.replace(urlParams.nextUrl);
+      }, 2500);
+    }
   }
 
   // Fetches all it's emails

@@ -17,9 +17,7 @@ body {
   font-size: 14px;
   min-height: 300px;
   width: 300px;
-  /* border: 1px solid red; */
-  color: #28334a !important;
-  /* background-color: #f6f6f6; */
+  color: #28324a !important;
   background-color: #ffffff;
 }
 
@@ -44,7 +42,7 @@ body {
 .menubar .license a {
   display: block;
   text-decoration: none;
-  background-image: linear-gradient(to bottom, #434e83, #28334a 80%);;
+  background-color: #28324a;
   color: #fcb917ff;
   padding: 1px 20px 3px 12.5px;
   border-radius: 0px 50px 50px 0px;
@@ -92,7 +90,7 @@ body {
   text-align: center;
   font-size: 13px;
   border-radius: 50px;
-  color: #28334a;
+  color: #28324a;
 }
 
 .actionCon .inputCon input#filterSearch:focus {
@@ -121,7 +119,7 @@ body {
   display: inline-block;
   border-radius: 50px;
   background-color: transparent;
-  color: #28334a;
+  color: #28324a;
   /* outline: 0px !important; */
   border: none;
   text-align: center;
@@ -135,7 +133,7 @@ body {
 .actionCon .buttonCon button.isButton {
   display: inline-block;
   border-radius: 50px;
-  background-image: linear-gradient(to bottom, #434e83, #28334a 80%);
+  background-color: #28324a;
   border: none;
   color: #fcb917ff;
   text-align: center;
