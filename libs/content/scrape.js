@@ -1,18 +1,9 @@
-class Search {
+class Scrape {
   constructor() {
+    console.log("Hi, from Scrape");
+    this.bodyHtml = document.body.innerHTML;
     this.extnlEms = [];
     this.exec();
-  }
-
-  // Changes the current Url to the appended url in the query [nextUrl]
-  changeToNextUrl() {
-    var urlParams = $.deparam(window.location.search);
-
-    if (urlParams.nextUrl != null || urlParams.nextUrl != null) {
-      setTimeout(() => {
-        window.location.replace(urlParams.nextUrl);
-      }, 2500);
-    }
   }
 
   // Fetches all it's emails
@@ -31,12 +22,9 @@ class Search {
           !eM.includes("bing") &&
           !eM.includes("zoho") &&
           !eM.includes("hotmail") &&
-          !eM.includes("htomain") &&
-          !eM.includes("hotmali") &&
           !eM.includes("live") &&
           !eM.includes("msn") &&
           !eM.includes("outlook") &&
-          !eM.includes("linkedin") &&
           !eM.includes("google") &&
           !eM.includes("alibaba") &&
           !eM.includes("aibaba") &&
@@ -46,8 +34,6 @@ class Search {
           !eM.includes("aliexpress") &&
           !eM.includes("made-in-china") &&
           !eM.includes("1688") &&
-          !eM.includes("126") &&
-          !eM.includes("163") &&
           !eM.includes("ebay") &&
           !eM.includes("shopify") &&
           !eM.includes("amazon") &&
@@ -66,23 +52,7 @@ class Search {
           !eM.includes("icloud")
       );
       eMtchs.forEach((eMtch) => {
-        eMtch = eMtch.trim().toLowerCase();
-        !this.extnlEms.includes(eMtch)
-          ? (() => {
-              // get email's tld (.com, .net etc...) and get rid of all other words joined to those tlds
-              var emailTld = eMtch.split(/\./gi)[
-                eMtch.split(/\./gi).length - 1
-              ];
-
-              emailTld.charAt(0) == "c" &&
-              emailTld.charAt(1) == "o" &&
-              emailTld.charAt(2) == "m"
-                ? this.extnlEms.push(eMtch.replace(emailTld, "com"))
-                : emailTld.charAt(0) == "c" && emailTld.charAt(1) == "n"
-                ? this.extnlEms.push(eMtch.replace(emailTld, "cn"))
-                : this.extnlEms.push(eMtch);
-            })()
-          : "";
+        !this.extnlEms.includes(eMtch) ? this.extnlEms.push(eMtch.trim()) : "";
       });
     }
 
@@ -92,11 +62,11 @@ class Search {
     });
   }
 
-  // Main method, the execute method.
   exec() {
-    this.fetchEmails();
-    this.changeToNextUrl();
+    // this.fetchEmails();
+    this.gotoAboutLinks(this.bodyHtml);
+    this.gotoContactLinks(this.bodyHtml);
   }
 }
 
-new Search();
+// new Scrape();

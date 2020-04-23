@@ -17,14 +17,7 @@ class Background {
     if (dms != null && dms != undefined) {
       if (dms.length > 0) {
         dms.forEach((dm) => {
-          !this.window.domains.includes(dm)
-            ? (() => {
-                this.window.domains.push(dm);
-                // chrome.browserAction.setBadgeText({
-                //   text: this.window.domains.length.toString(),
-                // });
-              })()
-            : "";
+          !this.window.domains.includes(dm) ? this.window.domains.push(dm) : "";
         });
       }
     }
@@ -38,9 +31,13 @@ class Background {
           !this.window.emails.includes(em)
             ? (() => {
                 this.window.emails.push(em);
-                chrome.browserAction.setBadgeText({
-                  text: `E: ${this.window.emails.length.toString()}`,
-                });
+                this.window.emails.length > 0
+                  ? chrome.browserAction.setBadgeText({
+                      text: `${this.window.emails.length.toString()}`,
+                    })
+                  : chrome.browserAction.setBadgeText({
+                      text: "",
+                    });
               })()
             : "";
         });

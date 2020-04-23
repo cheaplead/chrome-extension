@@ -10,6 +10,10 @@
   /* transition: all 0.25s; */
 }
 
+b {
+  font-weight: 200 !important;
+}
+
 body {
   font-family: "BreeSerif", sans-serif;
   margin: 0;
