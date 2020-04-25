@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Cheaplead • Pull bulk leads in a jiffy",
-  "version": "0.3.92",
+  "version": "0.18.50",
   "description": "A tool that pulls bulk email addresses in a jiffy, on a click.",
   "homepage_url": "https://cheaplead.net",
   "author": "https://cheaplead.net",
@@ -20,6 +20,15 @@
     },
     "default_popup": "./src/popup.html",
     "default_title": "Cheaplead • Pull bulk leads in a jiffy - (Extension)"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+C",
+        "mac": "Alt+C"
+      },
+      "description": "Opens ./src/popup.html"
+    }
   },
   "background": {
     "persistent": true,
@@ -51,14 +60,16 @@
     {
       "matches": [
         "*://*.yahoo.com/*from=cheaplead*",
-        "*://*.bing.com/*from=cheaplead*"
+        "*://*.bing.com/*from=cheaplead*",
+        "*://*/*from=cheaplead&type=justDomain"
       ],
       "js": ["./libs/engine/search.js"],
       "all_frames": true
     }
   ],
   "web_accessible_resources": [
-    "icons/icon.png",
+    "src/img/icon.png",
+    "src/img/loader.gif",
     "src/fonts/BreeSerif/BreeSerif-Regular.otf"
   ],
   "permissions": [

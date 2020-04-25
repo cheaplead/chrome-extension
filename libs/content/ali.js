@@ -51,7 +51,8 @@ class Ali {
       setAttributes(ifrm, { id: ifrmId, src: url });
 
       // Append it to ifrmCon
-      this.handleStatus(`Pulling leads...`);
+      this.handleStatus("loading", `Pulling leads...`);
+
       document.getElementById("ifrmCon").prepend(ifrm);
     };
 
@@ -83,7 +84,7 @@ class Ali {
         }
       });
     } else {
-      this.handleStatus(`Cheaplead wasn't allowed!`);
+      this.handleStatus("failed", `Cheaplead wasn't allowed!`);
     }
   }
 
@@ -108,32 +109,48 @@ class Ali {
         min-height: 20px;
         max-height: 100px;
         font-family: "BreeSerif", sans-serif !important;
-        z-index: 2999;
-        background-color: #28324a;
+        z-index: 4999;
+        background-color: #ffffff !important;
         padding: 10px 15px;
-        transition: linear 0.25s;
+        border: 1.5px solid #fcb917;
+        border-right: none !important;
+        transition: all 0.25s !important;
         border-radius: 50px 0px 0px 50px;
+        cursor: pointer;
       }
 
       .status #statusMsg * {
-        color: #fcb917ff !important;
+        color: #28324a !important;
       }
       
     </style>
     <section class="status" id="status">
-        <img src="${chrome.runtime.getURL(
-          "icons/icon.png"
-        )}" width="20" alt="https://cheaplead.net"/>
-        <div id="statusMsg" style="margin-left: 5px; margin-top: -2px; font-size: 13px;">
+        <img src="" width="20" alt="https://cheaplead.net"/>
+        <div id="statusMsg" style="margin-left: 5px; font-size: 13px;">
           <span></span>
         </div>
     </section>`;
 
     $(html).prependTo("body");
+
+    $("#status").click(() => {
+      $("#statusMsg span").css("display") == "inline"
+        ? $("#statusMsg span").css("display", "none")
+        : $("#statusMsg span").css("display", "inline");
+    });
   }
 
   // Print message to the status popup
-  handleStatus(msg) {
+  handleStatus(state, msg) {
+    state = state.toLowerCase().trim();
+    state == "loading"
+      ? $("#status img").attr(
+          "src",
+          chrome.runtime.getURL("src/img/loader.gif")
+        )
+      : state == "done" || state == "failed"
+      ? $("#status img").attr("src", chrome.runtime.getURL("src/img/icon.png"))
+      : "";
     $("#statusMsg span").text(msg);
   }
 
@@ -205,8 +222,8 @@ class Ali {
         document.onreadystatechange = () => {
           document.readyState === "complete"
             ? document.getElementById("ifrmCon") != null
-              ? this.handleStatus("Pulling completed!")
-              : this.handleStatus(`Cheaplead wasn't allowed!`)
+              ? this.handleStatus("done", "Pulling completed!")
+              : this.handleStatus("failed", `Cheaplead wasn't allowed!`)
             : "";
         };
       }

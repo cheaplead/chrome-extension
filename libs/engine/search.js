@@ -8,7 +8,7 @@ class Search {
   changeToNextUrl() {
     var urlParams = $.deparam(window.location.search);
 
-    if (urlParams.nextUrl != null || urlParams.nextUrl != null) {
+    if (urlParams.nextUrl != null) {
       setTimeout(() => {
         window.location.replace(urlParams.nextUrl);
       }, 2500);
@@ -19,6 +19,7 @@ class Search {
   fetchEmails() {
     var eMtchs,
       regEx = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi,
+      // regEx = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/gi,
       bodyText = document.body.innerText.toLowerCase().trim().match(regEx);
 
     // Checks if "bodyText" has a value. i.e not ['null'] nor ['undefined']

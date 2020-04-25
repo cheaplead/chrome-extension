@@ -109,6 +109,12 @@ class Background {
   // Main method, the execute method.
   exec() {
     this.handleMessages();
+    if (this.window.emails.length == 0) {
+      chrome.browserAction.setBadgeText({
+        text: "",
+      });
+    }
+    chrome.browserAction.setBadgeBackgroundColor({ color: "#4285f4" });
   }
 }
 
