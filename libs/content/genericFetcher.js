@@ -1,6 +1,5 @@
 class GenericFetcher {
   constructor() {
-    console.log("Hi, from GenericFetcher");
     this.bodyHtml = document.body.innerHTML;
     this.extLinks = [];
     this.gnExtnlEms = [];
@@ -150,11 +149,10 @@ class GenericFetcher {
         position: fixed;
         top: 15%;
         right: 0;
-        max-width: 300px;
         min-height: 20px;
         max-height: 100px;
         font-family: "BreeSerif", sans-serif !important;
-        z-index: 4999;
+        z-index: 49999999;
         background-color: #ffffff !important;
         padding: 10px 15px;
         border: 1.5px solid #fcb917;

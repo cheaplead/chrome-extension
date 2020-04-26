@@ -44,10 +44,15 @@ class PopUp {
         ? (() => {
             if (this.textBox.val().includes("alibaba")) {
               if (!this.textBox.val().includes("http")) {
-                this.bgWindow.locationUrl =
-                  this.textBox.val().match(/\./gi).length < 1
-                    ? `http://www.${this.textBox.val()}`
-                    : `http://${this.textBox.val()}`;
+                this.textBox.val().match(/\./gi).length < 1
+                  ? (() => {
+                      this.bgWindow.locationUrl = `http://www.${this.textBox.val()}`;
+                      this.getDomainFromUrl(`http://www.${this.textBox.val()}`);
+                    })()
+                  : (() => {
+                      this.bgWindow.locationUrl = `http://${this.textBox.val()}`;
+                      this.getDomainFromUrl(`http://${this.textBox.val()}`);
+                    })();
 
                 this.bgWindow.locationUrl.includes("?") &&
                 !this.bgWindow.locationUrl.includes("=cheaplead")
@@ -71,10 +76,15 @@ class PopUp {
               }
             } else {
               if (!this.textBox.val().includes("http")) {
-                this.bgWindow.locationUrl =
-                  this.textBox.val().match(/\./gi).length < 1
-                    ? `http://www.${this.textBox.val()}`
-                    : `http://${this.textBox.val()}`;
+                this.textBox.val().match(/\./gi).length < 1
+                  ? (() => {
+                      this.bgWindow.locationUrl = `http://www.${this.textBox.val()}`;
+                      this.getDomainFromUrl(`http://www.${this.textBox.val()}`);
+                    })()
+                  : (() => {
+                      this.bgWindow.locationUrl = `http://${this.textBox.val()}`;
+                      this.getDomainFromUrl(`http://${this.textBox.val()}`);
+                    })();
 
                 this.bgWindow.locationUrl.includes("?") &&
                 !this.bgWindow.locationUrl.includes("=cheaplead")
@@ -109,28 +119,115 @@ class PopUp {
     });
   }
 
+  getDomainFromUrl(urlBody) {
+    var mtchs;
+    var rgEx = /(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z][a-zA-Z]{0,61}[a-zA-Z]/g;
+    var dmVal = urlBody.toLowerCase();
+
+    // Checks if "dmVal" has a value. i.e not ['null'] nor ['undefined']
+    if (dmVal != undefined || dmVal != null || dmVal != "") {
+      mtchs = dmVal.match(rgEx).filter((mtch) => !mtch.includes("alibaba"));
+
+      // If there is no result from mtchs? stop loading and close window.
+
+      mtchs.forEach((mtch) =>
+        mtch != null
+          ? !mtch.includes("www.")
+            ? this.bgDms.push(mtch)
+            : (() => {
+                mtch.split("www.")[1].includes("http")
+                  ? mtch
+                      .split("www.")[1]
+                      .split("http")[0]
+                      .match(rgEx)
+                      .forEach((mval) => {
+                        mval != null ? this.bgDms.push(mval) : "";
+                      })
+                  : mtch
+                      .split("www.")[1]
+                      .match(rgEx)
+                      .forEach((mval) => {
+                        mval != null ? this.bgDms.push(mval) : "";
+                      });
+              })()
+          : ""
+      );
+    }
+  }
+
   // Cleaans everything for the app, to start again
   clearAll() {
     $("#clear").click(() => {
-      this.bgWindow.locationUrl = "";
-      this.bgWindow.domains = [];
-      this.bgWindow.emails = [];
+      this.sendToStore({ domains: this.bgDms, emails: this.bgEms }, () => {
+        this.bgWindow.locationUrl = "";
+        this.bgWindow.domains = [];
+        this.bgWindow.emails = [];
+        this.bgDms = [];
+        this.bgEms = [];
 
-      this.errorBox.html("");
-      this.textBox.val("").removeAttr("disabled", "disabled");
-      this.startBtn.removeAttr("disabled", "disabled");
+        this.errorBox.html("");
+        this.textBox.val("").removeAttr("disabled", "disabled");
+        this.startBtn.removeAttr("disabled", "disabled");
 
-      this.resultCon.text("");
-      this.copyResBtn.hide("");
+        this.resultCon.text("");
+        this.copyResBtn.hide("");
 
-      this.totalDms.text("");
-      this.totalEms.text("");
+        this.totalDms.text("");
+        this.totalEms.text("");
 
-      $(".totalValsCon").hide();
+        $(".totalValsCon").hide();
 
-      chrome.browserAction.setBadgeText({ text: "" });
-      chrome.runtime.sendMessage({ type: "removeCustomElements" });
+        chrome.browserAction.setBadgeText({ text: "" });
+        chrome.runtime.sendMessage({ type: "removeCustomElements" });
+      });
     });
+  }
+
+  // Store and save every email from user
+  sendToStore(data, callback) {
+    var customDate = `${new Date().getDate()}-${new Date().getMonth()}-${new Date().getFullYear()}`;
+    var bag = {
+      date: customDate,
+      timeSent: Date.now(),
+      startUrl: this.bgWindow.locationUrl,
+      domains: data.domains,
+      emails: data.emails,
+    };
+    var userBag = {
+      _id: "admin@cheaplead.net",
+      bags: [bag],
+    };
+
+    const isEmpty = (obj) => {
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) return false;
+      }
+      return true;
+    };
+
+    const saveToStore = (_userBag) => {
+      chrome.storage.sync.get(null, (result) => {
+        isEmpty(result)
+          ? (() => {
+              chrome.storage.sync.set({ userBag: _userBag }, callback);
+            })()
+          : (() => {
+              for (const key in result) {
+                if (result.hasOwnProperty(key)) {
+                  const resultJson = result[key];
+                  _userBag.bags.forEach((bag) => resultJson.bags.push(bag));
+                  chrome.storage.sync.set({ userBag: resultJson }, callback);
+                }
+              }
+            })();
+      });
+    };
+
+    if (this.bgWindow.locationUrl != "") {
+      saveToStore(userBag);
+    } else {
+      callback();
+    }
   }
 
   // Copy to clipboard when use clicks the [copy] button

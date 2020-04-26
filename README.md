@@ -1,5 +1,5 @@
 # Cheaplead
 
-A tool that pulls bulk email addresses in a jiffy, on a click.
+A tool that pulls bulk leads i.e (email addresses) in a jiffy, on a click.
 
-Offered By: [cheaplead.net](https://cheaplead.net)
+Offered By: [https://cheaplead.net](https://cheaplead.net)
