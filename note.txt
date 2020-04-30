@@ -1,0 +1,2 @@
+User's should be able to delete each extracted email if they don't like it.
+Should extract more leads (emails) than the domains extracted.
