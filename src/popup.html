@@ -15,12 +15,13 @@
 
 <body>
   <div class="menubar">
-    <span class="auth" hidden>
+    <span class="auth">
       <a href="https://cheaplead.net" target="_blank">
         <b>
           <div>
             <!-- <small class="isAuthed">Manage My Account</small> -->
-            <small class="isNotAuthed">Sign In Your Account</small>
+            <!-- <small class="isNotAuthed">Sign In Your Account</small> -->
+            <small class="isNotAuthed">Welcome, visit site!</small>
           </div>
         </b>
       </a>
@@ -85,18 +86,23 @@
       </h6>
       <div class="resultMain">
         <div class="result" id="domains"></div>
-        <hr>
-        <hr>
+        <div class="hr-lines">
+          <hr>
+          <hr>
+        </div>
         <div class="result" id="emails"></div>
       </div>
-      <center style="margin-top: 5px;">
-        <button id="copyEmailResultBtn" class="copyResultBtn" style="color: #fcb917;">
-          <span>Copy Emails</span>
-        </button>
-        <button id="copyDomainResultBtn" class="copyResultBtn" style="color: #fcb917;">
-          <span>Copy Domains</span>
-        </button></div>
-    </center>
+      <div class="resButtonCon">
+        <center style="margin-top: 5px;">
+          <button id="copyEmailResultBtn" class="copyResultBtn" style="color: #fcb917;">
+            <span>Copy Emails</span>
+          </button>
+          <button id="copyDomainResultBtn" class="copyResultBtn" style="color: #fcb917;">
+            <span>Copy Domains</span>
+          </button>
+        </center>
+      </div>
+    </div>
   </div>
 
   <script src="./js/jquery-3.4.1.min.js"></script>

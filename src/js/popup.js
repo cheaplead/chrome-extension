@@ -12,11 +12,14 @@ class PopUp {
     this.totalEms = $(".resultCon #totalEmails");
     this.startBtn = $(".buttonCon .buttons button#startPulling");
     this.resultCon = $(".resultCon .resultMain .result");
+    this.hrLines = $(".resultCon .resultMain .hr-lines");
+    this.resButtonCon = $(".resultCon .resButtonCon");
     this.copyEmailResBtn = $(".resultCon #copyEmailResultBtn");
     this.copyDomainResBtn = $(".resultCon #copyDomainResultBtn");
     this.resultEmails = $(".resultCon .resultMain .result#emails");
     this.resultDomains = $(".resultCon .resultMain .result#domains");
-
+    this.resButtonCon.hide();
+    this.hrLines.hide();
     this.exec();
   }
 
@@ -224,7 +227,6 @@ class PopUp {
             })();
       });
     };
-
     saveToStore(userBag);
     callback();
   }
@@ -259,6 +261,8 @@ class PopUp {
         $(".totalValsCon").show();
         $("#totalDomainsCon").css("display", "inline");
         this.copyDomainResBtn.show();
+        this.resButtonCon.show();
+        this.hrLines.show();
         this.totalDms.text(`${this.bgDms.length} `);
       }
     });
@@ -272,6 +276,8 @@ class PopUp {
         $(".totalValsCon").show();
         $("#totalEmailsCon").css("display", "inline");
         this.copyEmailResBtn.show();
+        this.resButtonCon.show();
+        this.hrLines.show();
         this.totalEms.text(`${this.bgEms.length} `);
       }
     });
