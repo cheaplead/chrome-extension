@@ -12,7 +12,8 @@ class PopUp {
     this.totalEms = $(".resultCon #totalEmails");
     this.startBtn = $(".buttonCon .buttons button#startPulling");
     this.resultCon = $(".resultCon .resultMain .result");
-    this.copyResBtn = $(".resultCon #copyResultBtn");
+    this.copyEmailResBtn = $(".resultCon #copyEmailResultBtn");
+    this.copyDomainResBtn = $(".resultCon #copyDomainResultBtn");
     this.resultEmails = $(".resultCon .resultMain .result#emails");
     this.resultDomains = $(".resultCon .resultMain .result#domains");
 
@@ -170,7 +171,8 @@ class PopUp {
         this.startBtn.removeAttr("disabled", "disabled");
 
         this.resultCon.text("");
-        this.copyResBtn.hide("");
+        this.copyEmailResBtn.hide("");
+        this.copyDomainResBtn.hide("");
 
         this.totalDms.text("");
         this.totalEms.text("");
@@ -223,11 +225,8 @@ class PopUp {
       });
     };
 
-    if (this.bgWindow.locationUrl != "") {
-      saveToStore(userBag);
-    } else {
-      callback();
-    }
+    saveToStore(userBag);
+    callback();
   }
 
   // Copy to clipboard when use clicks the [copy] button
@@ -259,10 +258,8 @@ class PopUp {
       if (this.bgDms.length > 0) {
         $(".totalValsCon").show();
         $("#totalDomainsCon").css("display", "inline");
-        this.copyResBtn.show();
+        this.copyDomainResBtn.show();
         this.totalDms.text(`${this.bgDms.length} `);
-        this.resultDomains.html("");
-        this.resultDomains.hide();
       }
     });
   }
@@ -274,19 +271,29 @@ class PopUp {
       if (this.bgEms.length > 0) {
         $(".totalValsCon").show();
         $("#totalEmailsCon").css("display", "inline");
-        this.copyResBtn.show();
+        this.copyEmailResBtn.show();
         this.totalEms.text(`${this.bgEms.length} `);
       }
     });
   }
 
   // Copy results
-  copyResults() {
-    this.copyResBtn.click((e) => {
-      this.copyToClipboard(this.resultEmails.text());
-      this.copyResBtn.text("Copied!");
+  copyDomainResults() {
+    this.copyDomainResBtn.click((e) => {
+      this.copyToClipboard(this.resultDomains.text());
+      this.copyDomainResBtn.text("Copied Domains!");
       setTimeout(() => {
-        this.copyResBtn.text("Copy");
+        this.copyDomainResBtn.text("Copy Domains");
+      }, 1500);
+    });
+  }
+
+  copyEmailResults() {
+    this.copyEmailResBtn.click((e) => {
+      this.copyToClipboard(this.resultEmails.text());
+      this.copyEmailResBtn.text("Copied Emails!");
+      setTimeout(() => {
+        this.copyEmailResBtn.text("Copy Emails");
       }, 1500);
     });
   }
@@ -300,7 +307,8 @@ class PopUp {
   // Main method, the execute method.
   exec() {
     this.startOperation();
-    this.copyResults();
+    this.copyDomainResults();
+    this.copyEmailResults();
     this.displayDomains();
     this.displayEmails();
     this.clearAll();

@@ -2,101 +2,105 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cheaplead</title>
-    <!-- CSS -->
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
-    <link rel="stylesheet" href="./css/popup.css">
-    <!-- LOGOS -->
-    <link rel="apple-touch-icon" href="./img/logo.png">
-    <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cheaplead</title>
+  <!-- CSS -->
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/popup.css">
+  <!-- LOGOS -->
+  <link rel="apple-touch-icon" href="./img/logo.png">
+  <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
 </head>
 
 <body>
-    <div class="menubar">
-        <span class="auth" hidden>
-            <a href="https://cheaplead.net" target="_blank">
-                <b>
-                    <div>
-                        <!-- <small class="isAuthed">Manage My Account</small> -->
-                        <small class="isNotAuthed">Sign In Your Account</small>
-                    </div>
-                </b>
-            </a>
-        </span>
-        <span class="version">
-            <small>
-                <b>
-                    v<span id="version_number">0.0.1</span>
-                </b>
-            </small>
-        </span>
-    </div>
-    <div class="totalBody">
-        <center>
-            <div class="header">
-                <!-- <br> -->
-                <div class="logo"><img src="./img/icon.png" width="100" alt="cheaplead logo"></div>
-                <!-- <br> -->
-                <div class="greetings mb-3">
-                    <h3>Cheaplead</h3>
-                </div>
-            </div>
-            <div class="actionCon">
-                <form name="filterForm">
-                    <div class="inputCon">
-                        <div class="form-group group">
-                            <input type="text" name="filterSearch" id="filterSearch" autofocus required
-                                placeholder="Place just a [domain] or [url]" class="form-control">
-                        </div>
-                        <small id="errorBox" class="text-danger"></small>
-                    </div>
-
-                    <div class="buttonCon">
-                        <div class="buttons">
-                            <button type="button" id="clear" class="clearBtn isNotButton">
-                                <span> Clear </span>
-                            </button>
-
-                            <button type="submit" id="startPulling" class="startPullingBtn isButton">
-                                <span> Start pulling </span>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-        </center>
-        <div class="resultCon">
-            <h6>
-                <small>
-                    <b>
-                        Result:
-                        <b class="totalValsCon">
-                            <section style="display: none;" id="totalDomainsCon">
-                                [ domains: <span id="totalDomains"></span>]
-                            </section>
-                            &nbsp;
-                            <section style="display: none;" id="totalEmailsCon">
-                                [ leads: <span id="totalEmails"></span>]
-                            </section>
-                        </b>
-                    </b>
-                    <button id="copyResultBtn" class="copyResultBtn" style="color: #fcb917;">
-                        <span> Copy </span>
-                    </button>
-                </small>
-            </h6>
-            <div class="resultMain">
-                <div class="result" id="domains" hidden></div>
-                <div class="result" id="emails"></div>
-            </div>
+  <div class="menubar">
+    <span class="auth" hidden>
+      <a href="https://cheaplead.net" target="_blank">
+        <b>
+          <div>
+            <!-- <small class="isAuthed">Manage My Account</small> -->
+            <small class="isNotAuthed">Sign In Your Account</small>
+          </div>
+        </b>
+      </a>
+    </span>
+    <span class="version">
+      <small>
+        <b>
+          v<span id="version_number">0.0.1</span>
+        </b>
+      </small>
+    </span>
+  </div>
+  <div class="totalBody">
+    <center>
+      <div class="header">
+        <div class="logo"><img src="./img/icon.png" width="100" alt="cheaplead logo"></div>
+        <div class="greetings mb-3">
+          <h3>Cheaplead</h3>
         </div>
-    </div>
+      </div>
+      <div class="actionCon">
+        <form name="filterForm">
+          <div class="inputCon">
+            <div class="form-group group">
+              <input type="text" name="filterSearch" id="filterSearch" autofocus required
+                placeholder="Place just a [domain] or [url]" class="form-control">
+            </div>
+            <small id="errorBox" class="text-danger"></small>
+          </div>
 
-    <script src="./js/jquery-3.4.1.min.js"></script>
-    <script src="./js/popup.js"></script>
+          <div class="buttonCon">
+            <div class="buttons">
+              <button type="button" id="clear" class="clearBtn isNotButton">
+                <span> Clear </span>
+              </button>
+
+              <button type="submit" id="startPulling" class="startPullingBtn isButton">
+                <span> Start pulling </span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </center>
+    <div class="resultCon">
+      <h6>
+        <small>
+          <b>
+            Result:
+            <b class="totalValsCon">
+              <section style="display: none;" id="totalDomainsCon">
+                [ domains: <span id="totalDomains"></span>]
+              </section>
+              &nbsp;
+              <section style="display: none;" id="totalEmailsCon">
+                [ leads: <span id="totalEmails"></span>]
+              </section>
+            </b>
+          </b>
+        </small>
+      </h6>
+      <div class="resultMain">
+        <div class="result" id="domains"></div>
+        <hr>
+        <hr>
+        <div class="result" id="emails"></div>
+      </div>
+      <center style="margin-top: 5px;">
+        <button id="copyEmailResultBtn" class="copyResultBtn" style="color: #fcb917;">
+          <span>Copy Emails</span>
+        </button>
+        <button id="copyDomainResultBtn" class="copyResultBtn" style="color: #fcb917;">
+          <span>Copy Domains</span>
+        </button></div>
+    </center>
+  </div>
+
+  <script src="./js/jquery-3.4.1.min.js"></script>
+  <script src="./js/popup.js"></script>
 </body>
 
 </html>
